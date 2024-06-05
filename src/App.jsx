@@ -1,47 +1,59 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import Todos from "./components/Todos";
+import React, { useState } from 'react'
 
-function App() {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "Finish Progate React Course",
-      complated: false,
-    },
-    {
-      id: 2,
-      title: "Have Lucnh With Guru Domba",
-      complated: false,
-    },
-    {
-      id: 3,
-      title: "Study React With Ninja Ken",
-      complated: false,
-    },
-  ]);
 
-  console.log(todos);
+const TodoForm = ({ addTodo }) => {
+     const [title, setTitle] = useState('')
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        addTodo(title)
+        setTitle('') // Reset title-nya
+      }
+
+      // Definisikan function "handleChangeTitle"
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value)
+  }
+  
+  // Periksa apakah function "handleChangeTitle" berfungsi
+  console.log(title)
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>My Todo List</h1>
-      <Todos todos={todos} />
+      <form   onSubmit={(event) => {
+          handleSubmit(event)
+        }}>
+        <input
+          type="text"
+          placeholder="Add your Todo"
+          style={styles.formInput}
+          onChange={(event) => {
+            handleChangeTitle(event)
+          }}
+          value={title}
+        />
+        <button style={styles.button}>Add Todo</button>
+      </form>
     </div>
   )
 }
 
+
 const styles = {
   container: {
-    textAlign: 'center',
-    padding: '12px',
+    marginBottom: '32px',
   },
-  title: {
-    fontSize: '36px',
+  formInput: {
+    height: '66px',
+    width: '40%',
+    fontSize: '16px',
+    padding: '0 16px',
   },
-}
+  button: {
+    height: '72px',
+    fontSize: '16px',
+  },
 }
 
-export default App;
+
+export default TodoForm
